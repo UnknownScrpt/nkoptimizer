@@ -3,7 +3,7 @@ name: Build NKOptimizer
 on:
   push:
     tags:
-      - "v*"
+      - "v*"  # roda apenas quando você criar tags como v1.1.0, v1.2.0 etc.
 
 jobs:
   build:
@@ -19,21 +19,24 @@ jobs:
           python-version: "3.10"
 
       - name: Instalar dependências
-        run: pip install pyinstaller requests customtkinter
+        run: |
+          pip install pyinstaller requests customtkinter
 
       - name: Gerar executável (.exe)
-        run: pyinstaller --onefile --noconsole nkoptimizer_app.py -n NKOptimizer-${{ github.ref_name }}
+        run: |
+          pyinstaller --onefile --noconsole nkoptimizer_app.py -n NKOptimizer-${{ github.ref_name }}
 
       - name: Calcular checksum e criar latest.json
+        shell: powershell
         run: |
           $hash = (Get-FileHash "dist/NKOptimizer-${{ github.ref_name }}.exe" -Algorithm SHA256).Hash
-          $content = @{
+          $json = @{
               version = "${{ github.ref_name }}"
               asset_url = "https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/NKOptimizer-${{ github.ref_name }}.exe"
               sha256 = $hash
-              changelog = "Veja as notas da versão no GitHub."
-          } | ConvertTo-Json
-          $content | Out-File -Encoding UTF8 latest.json
+              changelog = "Confira as novidades desta versão no GitHub."
+          } | ConvertTo-Json -Compress
+          $json | Out-File -Encoding UTF8 latest.json
 
       - name: Criar release no GitHub
         uses: softprops/action-gh-release@v2
