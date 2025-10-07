@@ -1,0 +1,8 @@
+{
+    "version": "1.0.0",
+    "files": [
+        {"name": "nkoptimizer_self_update.py", "path": "nkoptimizer_self_update.py"},
+        {"name": "Otimizar HD.bat", "path": "Otimizar HD.bat"}
+    ],
+    "changelog": "Novas funcionalidades adicionadas"
+}
