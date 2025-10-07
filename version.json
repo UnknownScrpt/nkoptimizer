@@ -1,8 +1,7 @@
 {
     "version": "1.0.0",
     "files": [
-        {"name": "nkoptimizer_self_update.py", "path": "nkoptimizer_self_update.py"},
-        {"name": "Otimizar HD.bat", "path": "Otimizar HD.bat"}
+        {"name": "desativar serviços inuteis", "path": "desativar serviços.BAT"},
     ],
-    "changelog": "Novas funcionalidades adicionadas"
+    "changelog": "desativar serviçõs inuteis adicionado!"
 }
