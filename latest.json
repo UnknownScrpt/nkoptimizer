@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "asset_url": "https://github.com/UnknownScrpt/nkoptimizer/releases/download/v1.0.1/NKOptimizer-1.0.1.exe",
+  "asset_url": "https://github.com/UnknownScrpt/nkoptimizer/releases/download/v1.0.0/NKOptimizer-1.0.0.exe",
   "sha256": "d5b7f6c8b8b12a8a0a1f3e85c29cb273c0df2bfe4b3a894733e3b0487a7d3a32",
   "changelog": "Melhorias de desempenho e correções de bugs."
 }
