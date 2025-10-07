@@ -1,0 +1,43 @@
+name: Build NKOptimizer
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Instalar dependências
+        run: pip install pyinstaller requests customtkinter
+
+      - name: Gerar executável (.exe)
+        run: pyinstaller --onefile --noconsole nkoptimizer_app.py -n NKOptimizer-${{ github.ref_name }}
+
+      - name: Calcular checksum e criar latest.json
+        run: |
+          $hash = (Get-FileHash "dist/NKOptimizer-${{ github.ref_name }}.exe" -Algorithm SHA256).Hash
+          $content = @{
+              version = "${{ github.ref_name }}"
+              asset_url = "https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/NKOptimizer-${{ github.ref_name }}.exe"
+              sha256 = $hash
+              changelog = "Veja as notas da versão no GitHub."
+          } | ConvertTo-Json
+          $content | Out-File -Encoding UTF8 latest.json
+
+      - name: Criar release no GitHub
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/NKOptimizer-${{ github.ref_name }}.exe
+            latest.json
